@@ -1,6 +1,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -25,12 +26,43 @@ module.exports = {
     
 
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendors',
+          test: /node_modules/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
+  },
   module: {
 
     rules: [
       {
         test:/\.pug$/,
         loader: 'pug-loader',
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: { sourceMap: true, config: { path: `./postcss.config.js` } }
+          // }
+        ]
       },
       {
         test:/\.scss$/,
@@ -46,15 +78,16 @@ module.exports = {
       }
     ]
   },
-
+  resolve: {
+    alias: {
+      
+    }
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/[name].[hash].css`,
     }),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
+    
     new CopyWebpackPlugin([
       { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
       { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },

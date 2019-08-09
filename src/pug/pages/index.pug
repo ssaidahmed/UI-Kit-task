@@ -2,18 +2,17 @@ doctype html
 html(lang='en')
   head
     title Jade
-    script(type='text/javascript').
-      const foo = true;
-      let bar = function() {};
-      if (foo) {
-      bar(1 + 5)
-      }
   body
     h1 Jade - node template engine
     #container.col
-      p You are amazing
+      p(id="foo") You are amazing
       p
         | Jade is a terse and simple
         | templating language with a
         | strong focus on performancej
         | and powerful features.
+    
+    input(type="text", name="date" id="datepicker")
+    button click me
+      span(class="ui-icon ui-icon-gear")
+    
