@@ -5,6 +5,7 @@ require('jquery-ui/themes/base/datepicker.css');
 require('jquery-ui/ui/widgets/button'); 
 require('jquery-ui/themes/base/button.css');
 require('jquery-ui/themes/base/theme.css');
+require('./assets/scss/main.scss');
 $( function() {
   $( "#datepicker" ).datepicker();
 } );
